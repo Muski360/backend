@@ -1,0 +1,307 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Sora:wght@300;400;500;700&display=swap');
+
+:root {
+    --ink: #1d2a3d;
+    --sand: #fff7ea;
+    --glass: rgba(255, 255, 255, 0.62);
+    --edge: rgba(255, 255, 255, 0.72);
+    --accent-a: #ff7a18;
+    --accent-b: #00a8a8;
+    --accent-c: #003459;
+    --danger-a: #d7263d;
+    --danger-b: #a51d31;
+    --shadow: 0 30px 80px rgba(0, 38, 66, 0.22);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    min-height: 100%;
+}
+
+body.fx-body {
+    margin: 0;
+    color: var(--ink);
+    font-family: "Sora", sans-serif;
+    background:
+        radial-gradient(1200px 700px at 12% -10%, #ffe5be 0%, rgba(255, 229, 190, 0) 55%),
+        radial-gradient(900px 700px at 85% -10%, #b7f4ea 0%, rgba(183, 244, 234, 0) 60%),
+        linear-gradient(130deg, #fef8ec 0%, #fff0d5 55%, #f4fff9 100%);
+    overflow-x: hidden;
+}
+
+#scene3d {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.55;
+}
+
+.vignette {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+        radial-gradient(circle at 20% 18%, rgba(255, 255, 255, 0.45), transparent 30%),
+        radial-gradient(circle at 80% 78%, rgba(255, 255, 255, 0.22), transparent 34%),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.08));
+}
+
+.content-shell {
+    position: relative;
+    z-index: 2;
+    width: min(1080px, 92vw);
+    margin: 36px auto 56px;
+}
+
+.main-panel {
+    margin-top: 20px;
+    padding: clamp(18px, 3.2vw, 34px);
+    border-radius: 28px;
+    background: var(--glass);
+    border: 1px solid var(--edge);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(14px);
+    transform-style: preserve-3d;
+    animation: rise 0.8s ease both;
+}
+
+.main-panel:hover {
+    transform: rotateX(1deg) rotateY(-1deg) translateY(-2px);
+}
+
+.fx-header {
+    border-radius: 22px;
+    padding: 8px 18px;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 0 16px 44px rgba(0, 52, 89, 0.14);
+    backdrop-filter: blur(10px);
+}
+
+.fx-nav-wrap {
+    gap: 16px;
+}
+
+.brand-mark {
+    font-family: "Bebas Neue", sans-serif;
+    letter-spacing: 1.2px;
+    font-size: 2rem;
+    color: var(--accent-c);
+    text-decoration: none;
+    line-height: 1;
+}
+
+.fx-link {
+    color: #18324a !important;
+    font-weight: 600;
+    border-radius: 999px;
+    padding: 8px 16px !important;
+    transition: all 0.25s ease;
+    transform: translateZ(0);
+}
+
+.fx-link:hover {
+    color: #fff !important;
+    background: linear-gradient(120deg, var(--accent-a), var(--accent-b));
+    box-shadow: 0 8px 20px rgba(0, 110, 110, 0.33);
+    transform: translateY(-2px);
+}
+
+.fx-title {
+    margin: 0 0 6px;
+    font-family: "Bebas Neue", sans-serif;
+    font-size: clamp(2.4rem, 5vw, 4.1rem);
+    letter-spacing: 1.6px;
+    color: #10243a;
+    text-shadow: 0 10px 26px rgba(255, 125, 24, 0.25);
+}
+
+.fx-subtitle {
+    margin: 0 0 24px;
+    font-size: 1rem;
+    opacity: 0.92;
+}
+
+.fx-form {
+    display: grid;
+    gap: 18px;
+}
+
+.fx-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.fx-grid > div:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+}
+
+.fx-label {
+    display: block;
+    margin-bottom: 7px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.9px;
+    color: #1f344e;
+}
+
+.search-wrap {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 14px;
+}
+
+.fx-input {
+    border-radius: 14px !important;
+    border: 1px solid rgba(0, 52, 89, 0.25) !important;
+    background: rgba(255, 255, 255, 0.86) !important;
+    padding: 12px 14px !important;
+    box-shadow: inset 0 2px 8px rgba(0, 40, 68, 0.08);
+}
+
+.fx-input:focus {
+    border-color: var(--accent-b) !important;
+    box-shadow: 0 0 0 0.2rem rgba(0, 168, 168, 0.2), inset 0 2px 10px rgba(0, 40, 68, 0.06) !important;
+}
+
+.fx-btn {
+    border: none !important;
+    border-radius: 14px !important;
+    color: #fff !important;
+    padding: 10px 18px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.4px;
+    background: linear-gradient(135deg, var(--accent-a), #ff9f43 35%, var(--accent-b));
+    box-shadow: 0 10px 20px rgba(255, 122, 24, 0.3);
+    transform: translateZ(0);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.fx-btn:hover {
+    transform: translateY(-2px) scale(1.01);
+    box-shadow: 0 16px 28px rgba(0, 110, 110, 0.36);
+    filter: saturate(1.08);
+}
+
+.fx-btn:active {
+    transform: translateY(0);
+}
+
+.fx-danger {
+    background: linear-gradient(135deg, var(--danger-a), var(--danger-b)) !important;
+    box-shadow: 0 10px 20px rgba(167, 34, 50, 0.34) !important;
+}
+
+.table-stage {
+    margin-top: 14px;
+    border-radius: 20px;
+    padding: 8px;
+    background: rgba(255, 255, 255, 0.62);
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.fx-table {
+    margin-bottom: 0 !important;
+    border-collapse: separate !important;
+    border-spacing: 0 10px !important;
+}
+
+.fx-table thead th {
+    border: none;
+    color: #23405a;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.fx-table tbody tr {
+    background: rgba(255, 255, 255, 0.88);
+    box-shadow: 0 8px 20px rgba(10, 40, 60, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.fx-table tbody tr:hover {
+    transform: translateY(-1px) scale(1.005);
+    box-shadow: 0 12px 26px rgba(10, 40, 60, 0.14);
+}
+
+.fx-table tbody td {
+    border-top: none;
+    vertical-align: middle;
+}
+
+.fx-table tbody tr td:first-child {
+    border-radius: 12px 0 0 12px;
+}
+
+.fx-table tbody tr td:last-child {
+    border-radius: 0 12px 12px 0;
+}
+
+.actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+@keyframes rise {
+    from {
+        opacity: 0;
+        transform: translateY(28px) rotateX(8deg);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) rotateX(0);
+    }
+}
+
+@media (max-width: 900px) {
+    .content-shell {
+        width: min(720px, 94vw);
+    }
+
+    .search-wrap {
+        grid-template-columns: 1fr;
+    }
+
+    .fx-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .brand-mark {
+        font-size: 1.7rem;
+    }
+
+    .fx-link {
+        padding: 7px 12px !important;
+    }
+
+    .main-panel {
+        border-radius: 22px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .main-panel,
+    .fx-btn,
+    .fx-link,
+    .fx-table tbody tr {
+        animation: none !important;
+        transition: none !important;
+        transform: none !important;
+    }
+
+    #scene3d {
+        display: none;
+    }
+}

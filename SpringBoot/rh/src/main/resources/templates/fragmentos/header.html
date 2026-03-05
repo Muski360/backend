@@ -1,0 +1,18 @@
+<header th:fragment="header" class="fx-header">
+    <nav class="navbar navbar-expand">
+        <div class="container-fluid px-0 fx-nav-wrap">
+            <a th:href="@{/}" class="navbar-brand brand-mark">RH Hyper Flow</a>
+            <ul class="navbar-nav flex-row gap-2 flex-wrap">
+                <li class="nav-item">
+                    <a th:href="@{/}" class="nav-link fx-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/funcionario}" class="nav-link fx-link">Cadastrar</a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/listar}" class="nav-link fx-link">Listar</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
