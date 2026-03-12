@@ -9,6 +9,16 @@
             "projectName": "rh",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-GerenciadorSenaiApplication<gerenciador_senai>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.example.gerenciador_senai.GerenciadorSenaiApplication",
+            "projectName": "gerenciador_senai",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
         }
     ]
 }
