@@ -25,6 +25,8 @@ import com.example.gerenciador_senai.service.MovimentacaoEstoqueService;
 @Configuration
 public class DataInitializer {
 
+
+	//feito pelo gpt para dar seed inicial.
 	// cria dados iniciais para facilitar os testes
 	@Bean
 	CommandLineRunner initData(FuncionarioAutenticadoRepository funcionarioAutenticadoRepository,
@@ -43,74 +45,23 @@ public class DataInitializer {
 			// exemplo: salvarFuncionarioAutorizado(funcionarioAutenticadoRepository, "Novo Nome", "1003");
 
 			// cria o usuario inicial para o primeiro login
-			if (funcionarioRepository.count() == 0) {
-				Funcionario funcionario = new Funcionario();
-				funcionario.setNome("Administrador Senai");
-				funcionario.setNif("1001");
-				funcionario.setSenha("1234");
-				funcionario.setAtivo(true);
-				funcionarioRepository.save(funcionario);
-			}
+			salvarFuncionarioInicial(funcionarioRepository, "Administrador Senai", "1001", "1234");
 
 			// cria categorias iniciais
-			if (categoriaRepository.count() == 0) {
-				Categoria informatica = new Categoria();
-				informatica.setNome("Informatica");
-				informatica.setDescricao("equipamentos e perifericos");
-				categoriaRepository.save(informatica);
-
-				Categoria laboratorio = new Categoria();
-				laboratorio.setNome("Laboratorio");
-				laboratorio.setDescricao("materiais de uso tecnico");
-				categoriaRepository.save(laboratorio);
-
-				Categoria limpeza = new Categoria();
-				limpeza.setNome("Limpeza");
-				limpeza.setDescricao("itens de apoio e higienizacao");
-				categoriaRepository.save(limpeza);
-			}
+			Categoria informatica = salvarCategoriaSeNaoExistir(categoriaRepository, "Informatica",
+					"equipamentos e perifericos");
+			Categoria laboratorio = salvarCategoriaSeNaoExistir(categoriaRepository, "Laboratorio",
+					"materiais de uso tecnico");
+			salvarCategoriaSeNaoExistir(categoriaRepository, "Limpeza", "itens de apoio e higienizacao");
 
 			// cria materiais iniciais
-			if (materialRepository.count() == 0) {
-				Categoria informatica = categoriaRepository.findAllByOrderByNomeAsc().stream()
-						.filter(categoria -> categoria.getNome().equalsIgnoreCase("Informatica"))
-						.findFirst()
-						.orElseThrow();
-				Categoria laboratorio = categoriaRepository.findAllByOrderByNomeAsc().stream()
-						.filter(categoria -> categoria.getNome().equalsIgnoreCase("Laboratorio"))
-						.findFirst()
-						.orElseThrow();
-
-				Material notebook = new Material();
-				notebook.setNome("Notebook");
-				notebook.setDescricao("notebook para uso em sala");
-				notebook.setUnidadeMedida("unidade");
-				notebook.setQuantidadeMinima(3);
-				notebook.setQuantidadeEmEstoque(0);
-				notebook.setCategoria(informatica);
-				materialRepository.save(notebook);
-
-				Material multimetro = new Material();
-				multimetro.setNome("Multimetro");
-				multimetro.setDescricao("equipamento de medicao");
-				multimetro.setUnidadeMedida("unidade");
-				multimetro.setQuantidadeMinima(2);
-				multimetro.setQuantidadeEmEstoque(0);
-				multimetro.setCategoria(laboratorio);
-				materialRepository.save(multimetro);
-			}
+			Material notebook = salvarMaterialSeNaoExistir(materialRepository, informatica, "Notebook",
+					"notebook para uso em sala", "unidade", 3);
+			Material multimetro = salvarMaterialSeNaoExistir(materialRepository, laboratorio, "Multimetro",
+					"equipamento de medicao", "unidade", 2);
 
 			// cria entradas iniciais no estoque
 			if (movimentacaoEstoqueRepository.count() == 0) {
-				Material notebook = materialRepository.findAllByOrderByNomeAsc().stream()
-						.filter(material -> material.getNome().equalsIgnoreCase("Notebook"))
-						.findFirst()
-						.orElseThrow();
-				Material multimetro = materialRepository.findAllByOrderByNomeAsc().stream()
-						.filter(material -> material.getNome().equalsIgnoreCase("Multimetro"))
-						.findFirst()
-						.orElseThrow();
-
 				movimentacaoEstoqueService.salvar(null, notebook.getId(), TipoMovimentacao.ENTRADA, 10,
 						"entrada inicial do sistema", "seed inicial");
 				movimentacaoEstoqueService.salvar(null, multimetro.getId(), TipoMovimentacao.ENTRADA, 5,
@@ -156,5 +107,46 @@ public class DataInitializer {
 		funcionarioAutenticado.setNif(nif);
 		funcionarioAutenticado.setAtivo(true);
 		funcionarioAutenticadoRepository.save(funcionarioAutenticado);
+	}
+
+	// salva o usuario inicial se ele ainda nao existir
+	private void salvarFuncionarioInicial(FuncionarioRepository funcionarioRepository, String nome, String nif,
+			String senha) {
+		if (funcionarioRepository.findByNifAndAtivoTrue(nif).isPresent()) {
+			return;
+		}
+
+		Funcionario funcionario = new Funcionario();
+		funcionario.setNome(nome);
+		funcionario.setNif(nif);
+		funcionario.setSenha(senha);
+		funcionario.setAtivo(true);
+		funcionarioRepository.save(funcionario);
+	}
+
+	// salva a categoria inicial se ela ainda nao existir
+	private Categoria salvarCategoriaSeNaoExistir(CategoriaRepository categoriaRepository, String nome,
+			String descricao) {
+		return categoriaRepository.findByNomeIgnoreCase(nome).orElseGet(() -> {
+			Categoria categoria = new Categoria();
+			categoria.setNome(nome);
+			categoria.setDescricao(descricao);
+			return categoriaRepository.save(categoria);
+		});
+	}
+
+	// salva o material inicial se ele ainda nao existir
+	private Material salvarMaterialSeNaoExistir(MaterialRepository materialRepository, Categoria categoria,
+			String nome, String descricao, String unidadeMedida, Integer quantidadeMinima) {
+		return materialRepository.findByNomeIgnoreCase(nome).orElseGet(() -> {
+			Material material = new Material();
+			material.setNome(nome);
+			material.setDescricao(descricao);
+			material.setUnidadeMedida(unidadeMedida);
+			material.setQuantidadeMinima(quantidadeMinima);
+			material.setQuantidadeEmEstoque(0);
+			material.setCategoria(categoria);
+			return materialRepository.save(material);
+		});
 	}
 }
