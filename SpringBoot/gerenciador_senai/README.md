@@ -1,4 +1,4 @@
-| ID | Tipo | Requisito | Descrição detalhada | Prioridade |
+| ID | Tipo | Requisito | Descrição detalhada
 |---|---|---|---|---|
 | RF-01 | Funcional | Cadastro de funcionários | O sistema deve permitir o cadastro de funcionários para acesso à aplicação.
 | RF-02 | Funcional | Login por NIF e senha | O sistema deve permitir autenticação de funcionários usando NIF e senha.
