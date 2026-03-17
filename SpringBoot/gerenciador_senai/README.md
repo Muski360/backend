@@ -1,5 +1,5 @@
 | ID | Tipo | Requisito | Descrição detalhada |
-|---|---|---|---|---|
+|---|---|---|---|
 | RF-01 | Funcional | Cadastro de funcionários | O sistema deve permitir o cadastro de funcionários para acesso à aplicação. |
 | RF-02 | Funcional | Login por NIF e senha | O sistema deve permitir autenticação de funcionários usando NIF e senha. |
 | RF-03 | Funcional | Restrição de acesso por NIF autorizado | O sistema deve permitir criar conta apenas para funcionários previamente autorizados na base de pré-cadastro. |
